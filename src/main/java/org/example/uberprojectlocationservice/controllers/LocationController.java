@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/api/location")
 public class LocationController {
 
-    private LocationService locationService;
+    private final LocationService locationService;
 
     public LocationController(LocationService locationService){
         this.locationService=locationService;
@@ -38,7 +38,7 @@ public class LocationController {
     }
 
     @GetMapping("/nearby/drivers/{searchRadius}")
-    public ResponseEntity<?> getNearByDrivers(@PathVariable Double searchRadius, @RequestBody NearbyDriversRequestDto nearbyDriversRequestDto){
+    public ResponseEntity<List<DriverLocationDto>> getNearByDrivers(@PathVariable Double searchRadius, @RequestBody NearbyDriversRequestDto nearbyDriversRequestDto){
 
         try {
             List<DriverLocationDto> drivers = locationService.getNearByDrivers(searchRadius,nearbyDriversRequestDto.getLatitude(),nearbyDriversRequestDto.getLongitude());

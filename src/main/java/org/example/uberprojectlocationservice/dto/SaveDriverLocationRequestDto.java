@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SaveDriverLocationRequestDto {
-
+    
     String driverId;
     Double latitude;
     Double longitude;

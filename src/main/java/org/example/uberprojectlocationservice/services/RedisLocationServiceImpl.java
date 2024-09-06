@@ -6,7 +6,6 @@ import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.GeoOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +14,6 @@ public class RedisLocationServiceImpl implements LocationService{
 
 
     private static final String DRIVER_GEO_OPS_KEY = "drivers";
-
-//    private static final Double SEARCH_RADIUS = 100.00;
 
     private final StringRedisTemplate stringRedisTemplate;
 
@@ -38,12 +35,12 @@ public class RedisLocationServiceImpl implements LocationService{
     }
 
     @Override
-    public List<DriverLocationDto> getNearByDrivers(Double SEARCH_RADIUS,Double latitude, Double longitude) {
+    public List<DriverLocationDto> getNearByDrivers(Double searchRadius,Double latitude, Double longitude){
         GeoOperations<String, String> geoOps = stringRedisTemplate.opsForGeo();
-        Distance radius =new Distance(SEARCH_RADIUS, Metrics.KILOMETERS);
+        Distance radius =new Distance(searchRadius, Metrics.KILOMETERS);
         Circle within = new Circle(new Point(latitude,longitude),radius);
 
-        GeoResults<RedisGeoCommands.GeoLocation<String>> results = geoOps.radius(DRIVER_GEO_OPS_KEY,within);;
+        GeoResults<RedisGeoCommands.GeoLocation<String>> results = geoOps.radius(DRIVER_GEO_OPS_KEY,within);
         List<DriverLocationDto> drivers = new ArrayList<>();
         for(GeoResult<RedisGeoCommands.GeoLocation<String>> result : results){
             Point point = geoOps.position(DRIVER_GEO_OPS_KEY,result.getContent().getName()).get(0);
