@@ -16,7 +16,6 @@ import java.util.List;
 public class LocationController {
 
     private final LocationService locationService;
-
     public LocationController(LocationService locationService){
         this.locationService=locationService;
     }
@@ -37,7 +36,7 @@ public class LocationController {
         }
     }
 
-    @GetMapping("/nearby/drivers/{searchRadius}")
+    @PostMapping("/nearby/drivers/{searchRadius}")
     public ResponseEntity<List<DriverLocationDto>> getNearByDrivers(@PathVariable Double searchRadius, @RequestBody NearbyDriversRequestDto nearbyDriversRequestDto){
 
         try {
@@ -47,7 +46,6 @@ public class LocationController {
         catch (Exception e){
             return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
 
     }
 }
